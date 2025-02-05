@@ -16,12 +16,14 @@ const SelectContext = createContext<SelectContextType>({
 type SelectProps = {
     children: React.ReactNode;
     defaultValue?: string;
+    onFormChange?: (value: string) => void;
 };
 
-const Select = ({ children, defaultValue }: SelectProps) => {
+const Select = ({ children, defaultValue, onFormChange }: SelectProps) => {
     const [selectValue, setSelectValue] = useState(defaultValue ?? '');
 
     const changeSelectValue = (value: string) => {
+        onFormChange && onFormChange(value);
         setSelectValue(value);
     };
 
@@ -36,3 +38,4 @@ export default Select;
 
 Select.Head = Head;
 Select.Option = Option;
+Select.changeHandlerPropName = 'onSelectChange';
