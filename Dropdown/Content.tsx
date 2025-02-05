@@ -1,24 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import React, { useRef, useEffect } from 'react';
-import { useModal } from './Modal';
-import { css, SerializedStyles } from '@emotion/react';
+import { useDropdown } from './Dropdown';
+import { SerializedStyles } from '@emotion/react';
 
-const contentStyle = css`
-    display: flex;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 200;
-`;
-
-type ContentProps = {
+type ContentProps = React.ButtonHTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
-    defaultStyle?: SerializedStyles; // 선택적 css 속성
+    defaultStyle?: SerializedStyles;
 };
 
 const Content = ({ children, defaultStyle }: ContentProps) => {
-    const { modalValue, closeModal } = useModal();
+    const { dropdownValue, closeDropdown } = useDropdown();
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -26,25 +17,27 @@ const Content = ({ children, defaultStyle }: ContentProps) => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 containerRef.current && // ref가 존재하고
-                !containerRef.current.contains(event.target as Node) // 클릭 대상이 모달 내부가 아니라면
+                !containerRef.current.contains(event.target as Node) // 클릭 대상이 내부 엘리먼트가 아니라면
             ) {
-                closeModal();
+                closeDropdown();
             }
         };
 
-        if (modalValue) {
+        // 드랍다운이 열려 있을 때만 이벤트 리스너 등록
+        if (dropdownValue) {
             document.addEventListener('mousedown', handleClickOutside);
         }
 
+        // 컴포넌트 언마운트 또는 dropdownValue 변경 시 클린업
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [modalValue, closeModal]);
+    }, [dropdownValue, closeDropdown]);
 
     return (
         <>
-            {modalValue && (
-                <div ref={containerRef} css={[contentStyle, defaultStyle]}>
+            {dropdownValue && (
+                <div ref={containerRef} css={[defaultStyle]}>
                     {children}
                 </div>
             )}
