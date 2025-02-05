@@ -1,5 +1,11 @@
+/** @jsxImportSource @emotion/react */
 import React, { useEffect } from 'react';
 import { useCheckbox } from './Checkbox';
+import { css } from '@emotion/react';
+
+const ItemStyle = css`
+    display: inline-block;
+`;
 
 type ItemProps = {
     itemValue: string;
@@ -7,26 +13,25 @@ type ItemProps = {
 };
 
 const Item = ({ itemValue, children }: ItemProps) => {
-    const { checkboxValue, changeCheckboxValue } = useCheckbox();
+    const { checkboxValue, handleCheckboxValue } = useCheckbox();
 
     const isChecked = checkboxValue.includes(itemValue);
 
-    const filterCheckbox = () => {
+    const handleItem = () => {
         if (isChecked) {
-            changeCheckboxValue(checkboxValue.filter((item) => item !== itemValue));
+            handleCheckboxValue(checkboxValue.filter((item) => item !== itemValue));
         } else {
-            changeCheckboxValue([...checkboxValue, itemValue]);
+            handleCheckboxValue([...checkboxValue, itemValue]);
         }
     };
     useEffect(() => {
         console.log('checkboxValue', checkboxValue);
     }, [checkboxValue]);
-  
+
     return (
-        <label>
-            <input type="checkbox" checked={isChecked} onClick={filterCheckbox} />
+        <div css={[ItemStyle]} onClick={handleItem}>
             {children}
-        </label>
+        </div>
     );
 };
 
