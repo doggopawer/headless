@@ -3,34 +3,29 @@ import Item from './Item';
 import AllCheck from './AllCheck';
 
 type CheckboxContextType = {
-    values: string[];
     checkboxValue: string[];
     handleCheckboxValue: (value: string[]) => void;
 };
 
 const CheckboxContext = createContext<CheckboxContextType>({
-    values: [],
     checkboxValue: [],
     handleCheckboxValue: ([]) => {},
 });
 
 type CheckboxProps = {
     children: React.ReactNode;
-    defaultValues?: string[];
+    defaultValue?: string[];
 };
 
-const Checkbox = ({ children, defaultValues }: CheckboxProps) => {
-    const [checkboxValue, setCheckboxValue] = useState<string[]>([]);
-    const values = defaultValues;
+const Checkbox = ({ children, defaultValue }: CheckboxProps) => {
+    const [checkboxValue, setCheckboxValue] = useState<string[]>(defaultValue ?? []);
 
     const handleCheckboxValue = (value: string[]) => {
         setCheckboxValue(value);
     };
 
     return (
-        <CheckboxContext.Provider value={{ values: values ?? [], checkboxValue, handleCheckboxValue }}>
-            {children}
-        </CheckboxContext.Provider>
+        <CheckboxContext.Provider value={{ checkboxValue, handleCheckboxValue }}>{children}</CheckboxContext.Provider>
     );
 };
 export const useCheckbox = () => {

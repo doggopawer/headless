@@ -4,23 +4,25 @@ import { useCheckbox } from './Checkbox';
 import { css } from '@emotion/react';
 
 const AllCheckStyle = css`
-    display: flex;
+    display: inline-block;
 `;
 
 type AllCheckProps = {
+    allValues: string[];
     children: React.ReactNode;
 };
 
-const AllCheck = ({ children }: AllCheckProps) => {
-    const { checkboxValue, handleCheckboxValue, values } = useCheckbox();
+const AllCheck = ({ allValues, children }: AllCheckProps) => {
+    const { checkboxValue, handleCheckboxValue } = useCheckbox();
+
     const isChecked = (value: string) => checkboxValue.includes(value);
-    const allChecked = checkboxValue.length > 0 && checkboxValue.every(isChecked);
+    const allChecked = allValues.every(isChecked);
 
     const handleCheckAll = () => {
         if (allChecked) {
             handleCheckboxValue([]);
         } else {
-            handleCheckboxValue(values);
+            handleCheckboxValue(allValues);
         }
     };
     return (

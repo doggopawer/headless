@@ -8,20 +8,20 @@ const ItemStyle = css`
 `;
 
 type ItemProps = {
-    itemValue: string;
+    value: string;
     children: React.ReactNode;
 };
 
-const Item = ({ itemValue, children }: ItemProps) => {
+const Item = ({ value, children }: ItemProps) => {
     const { checkboxValue, handleCheckboxValue } = useCheckbox();
 
-    const isChecked = checkboxValue.includes(itemValue);
+    const isChecked = checkboxValue.includes(value);
 
     const handleItem = () => {
         if (isChecked) {
-            handleCheckboxValue(checkboxValue.filter((item) => item !== itemValue));
+            handleCheckboxValue(checkboxValue.filter((item) => item !== value));
         } else {
-            handleCheckboxValue([...checkboxValue, itemValue]);
+            handleCheckboxValue([...checkboxValue, value]);
         }
     };
     useEffect(() => {
