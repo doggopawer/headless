@@ -8,10 +8,11 @@ type OptionProps = React.ButtonHTMLAttributes<HTMLDivElement> & {
     value: string;
     onOptionClick?: (value: string) => void;
     defaultStyle?: SerializedStyles;
+    activeStyle?: SerializedStyles;
 };
 
-const Option = ({ children, value, onOptionClick, defaultStyle }: OptionProps) => {
-    const { changeSelectValue } = useSelect();
+const Option = ({ children, value, onOptionClick, defaultStyle, activeStyle }: OptionProps) => {
+    const { selectValue, changeSelectValue } = useSelect();
 
     const handleOptionClick = (value: string) => {
         onOptionClick && onOptionClick(value);
@@ -19,7 +20,7 @@ const Option = ({ children, value, onOptionClick, defaultStyle }: OptionProps) =
     };
 
     return (
-        <li css={[defaultStyle]} onClick={() => handleOptionClick(value)}>
+        <li css={[defaultStyle, selectValue === value && activeStyle]} onClick={() => handleOptionClick(value)}>
             {children}
         </li>
     );
