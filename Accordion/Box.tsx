@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import { css } from '@emotion/react';
+import { css, SerializedStyles } from '@emotion/react';
 
-const BoxStyle = css`
+const boxStyle = css`
     display: inline-block;
 `;
 
 type BoxProps = {
     children: React.ReactNode;
+    defaultStyle: SerializedStyles;
 };
 
-const Box = ({ children }: BoxProps) => {
-    return <div css={[BoxStyle]}>{children}</div>;
+const Box = ({ children, defaultStyle }: BoxProps) => {
+    return <div css={[boxStyle, defaultStyle]}>{children}</div>;
 };
 
 export default Box;
