@@ -24,7 +24,7 @@ const Item = ({ children, name }: ItemProps) => {
         }
     );
 
-    return <div>{childWithProps}</div>;
+    return <>{childWithProps}</>;
 };
 
 export default Item;
