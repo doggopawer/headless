@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
-import { useCheckbox } from './Checkbox';
-import { css } from '@emotion/react';
+import React from "react";
+import {useCheckboxGroup} from "./CheckboxGroup";
+import {css} from "@emotion/react";
 
 const AllCheckStyle = css`
     display: inline-block;
@@ -12,17 +12,17 @@ type AllCheckProps = {
     children: React.ReactNode;
 };
 
-const AllCheck = ({ allValues, children }: AllCheckProps) => {
-    const { checkboxValue, handleCheckboxValue } = useCheckbox();
+const AllCheck = ({allValues, children}: AllCheckProps) => {
+    const {checkboxGroupValue, handleCheckboxGroupValue} = useCheckboxGroup();
 
-    const isChecked = (value: string) => checkboxValue.includes(value);
+    const isChecked = (value: string) => checkboxGroupValue.includes(value);
     const allChecked = allValues.every(isChecked);
 
     const handleCheckAll = () => {
         if (allChecked) {
-            handleCheckboxValue([]);
+            handleCheckboxGroupValue([]);
         } else {
-            handleCheckboxValue(allValues);
+            handleCheckboxGroupValue(allValues);
         }
     };
     return (
