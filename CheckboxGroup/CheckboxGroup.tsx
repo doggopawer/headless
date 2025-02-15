@@ -1,6 +1,5 @@
 import React, {createContext, useContext, useState} from "react";
 import Item from "./CheckboxGroupItem";
-import AllCheck from "./AllCheck";
 
 type CheckboxGroupContextType = {
     checkboxGroupValue: string[];
@@ -51,4 +50,3 @@ export const useCheckboxGroup = () => {
 export default CheckboxGroup;
 
 CheckboxGroup.Item = Item;
-CheckboxGroup.AllCheck = AllCheck;
