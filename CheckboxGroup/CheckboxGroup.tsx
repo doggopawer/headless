@@ -1,15 +1,16 @@
 import React, {createContext, useContext, useState} from "react";
 import Item from "./CheckboxGroupItem";
-import AllCheck from "./AllCheck";
 
 type CheckboxGroupContextType = {
     checkboxGroupValue: string[];
-    handleCheckboxGroupValue: (value: string[]) => void;
+    toggleCheckboxGroupValue: (value: string) => void;
+    isChecked: (value: string) => boolean;
 };
 
 const CheckboxGroupContext = createContext<CheckboxGroupContextType>({
     checkboxGroupValue: [],
-    handleCheckboxGroupValue: ([]) => {},
+    toggleCheckboxGroupValue: () => {},
+    isChecked: () => false,
 });
 
 type CheckboxGroupProps = {
@@ -22,13 +23,21 @@ const CheckboxGroup = ({children, defaultValue}: CheckboxGroupProps) => {
         defaultValue ?? [],
     );
 
-    const handleCheckboxGroupValue = (value: string[]) => {
-        setCheckboxGroupValue(value);
+    const isChecked = (value: string) => checkboxGroupValue.includes(value);
+
+    const toggleCheckboxGroupValue = (value: string) => {
+        if (isChecked(value)) {
+            setCheckboxGroupValue(
+                checkboxGroupValue.filter(item => item !== value),
+            );
+        } else {
+            setCheckboxGroupValue([...checkboxGroupValue, value]);
+        }
     };
 
     return (
         <CheckboxGroupContext.Provider
-            value={{checkboxGroupValue, handleCheckboxGroupValue}}
+            value={{checkboxGroupValue, isChecked, toggleCheckboxGroupValue}}
         >
             {children}
         </CheckboxGroupContext.Provider>
@@ -41,4 +50,3 @@ export const useCheckboxGroup = () => {
 export default CheckboxGroup;
 
 CheckboxGroup.Item = Item;
-CheckboxGroup.AllCheck = AllCheck;

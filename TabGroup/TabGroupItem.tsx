@@ -5,7 +5,7 @@ import {SerializedStyles} from "@emotion/react";
 
 type TabGroupItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     value: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
     onTabGroupItemClick?: (value: string) => void;
     defaultStyle?: SerializedStyles; // css를 선택적 속성으로 설정
     activeStyle?: SerializedStyles;
