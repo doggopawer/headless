@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import {css, SerializedStyles} from "@emotion/react";
-import React, {useEffect, useRef, useState} from "react";
-import {useAccordion} from "./Accordion";
+import { css, SerializedStyles } from '@emotion/react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useAccordion } from './Accordion';
 
 type HiddenProps = {
     children: React.ReactNode;
     defalutStyle?: SerializedStyles;
 };
 
-const Hidden = ({children, defalutStyle}: HiddenProps) => {
-    const {accordionValue} = useAccordion();
+const Hidden = ({ children, defalutStyle }: HiddenProps) => {
+    const { accordionValue } = useAccordion();
 
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [height, setHeight] = useState(0);
@@ -17,9 +17,7 @@ const Hidden = ({children, defalutStyle}: HiddenProps) => {
     useEffect(() => {
         if (containerRef.current) {
             // 모든 자식 요소의 높이를 합산
-            const totalHeight = Array.from(
-                containerRef.current.children,
-            ).reduce((acc, child) => {
+            const totalHeight = Array.from(containerRef.current.children).reduce((acc, child) => {
                 return acc + (child as HTMLElement).offsetHeight;
             }, 0);
 
@@ -37,7 +35,7 @@ const Hidden = ({children, defalutStyle}: HiddenProps) => {
         <>
             {
                 <div ref={containerRef} css={[hiddenStyle, defalutStyle]}>
-                    {children}
+                    <div>{children}</div>
                 </div>
             }
         </>
