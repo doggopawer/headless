@@ -6,10 +6,11 @@ import { SerializedStyles } from '@emotion/react';
 type NextProps = {
     children: React.ReactNode;
     defaultStyle?: SerializedStyles;
+    disabledStyle?: SerializedStyles;
     onNextClick?: (paginationValue: PaginationValueType) => void;
 };
 
-const Next = ({ children, defaultStyle, onNextClick }: NextProps) => {
+const Next = ({ children, defaultStyle, disabledStyle, onNextClick }: NextProps) => {
     const { goToNextPage, hasNextPage } = usePagination();
 
     const handleNextButtonClick = () => {
@@ -20,7 +21,11 @@ const Next = ({ children, defaultStyle, onNextClick }: NextProps) => {
     const hasNoNextPage = !hasNextPage;
 
     return (
-        <button disabled={hasNoNextPage} css={[defaultStyle]} onClick={handleNextButtonClick}>
+        <button
+            disabled={hasNoNextPage}
+            css={[defaultStyle, hasNoNextPage && disabledStyle]}
+            onClick={handleNextButtonClick}
+        >
             {children}
         </button>
     );

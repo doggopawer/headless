@@ -6,10 +6,11 @@ import { SerializedStyles } from '@emotion/react';
 type PrevProps = {
     children: React.ReactNode;
     defaultStyle?: SerializedStyles;
+    disabledStyle?: SerializedStyles;
     onPrevClick?: (paginationValue: PaginationValueType) => void;
 };
 
-const Prev = ({ children, defaultStyle, onPrevClick }: PrevProps) => {
+const Prev = ({ children, defaultStyle, disabledStyle, onPrevClick }: PrevProps) => {
     const { goToPrevPage, hasPrevPage } = usePagination();
 
     const handlePrevButtonClick = () => {
@@ -20,7 +21,11 @@ const Prev = ({ children, defaultStyle, onPrevClick }: PrevProps) => {
     const hasNoPrevPage = !hasPrevPage;
 
     return (
-        <button disabled={hasNoPrevPage} css={[defaultStyle]} onClick={handlePrevButtonClick}>
+        <button
+            disabled={hasNoPrevPage}
+            css={[defaultStyle, hasNoPrevPage && disabledStyle]}
+            onClick={handlePrevButtonClick}
+        >
             {children}
         </button>
     );

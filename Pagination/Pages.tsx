@@ -5,10 +5,11 @@ import { PaginationValueType, usePagination } from './Pagination';
 
 type PagesProps = {
     defaultStyle?: SerializedStyles;
+    activeStyle?: SerializedStyles;
     onPagesClick?: (paginationValue: PaginationValueType) => void;
 };
 
-const Pages = ({ defaultStyle, onPagesClick }: PagesProps) => {
+const Pages = ({ defaultStyle, onPagesClick, activeStyle }: PagesProps) => {
     const { paginationValue, goToPage, endPage, startPage } = usePagination();
     const { page } = paginationValue;
 
@@ -27,7 +28,7 @@ const Pages = ({ defaultStyle, onPagesClick }: PagesProps) => {
                         key={currentPage}
                         onClick={() => handlePagesClick(currentPage)}
                         disabled={currentPage === page} // 현재 페이지 버튼은 비활성화(혹은 강조)
-                        css={[defaultStyle]}
+                        css={[defaultStyle, currentPage === page && activeStyle]}
                     >
                         {currentPage} {/* 사용자에게는 1부터 시작하는 숫자로 표시 */}
                     </button>
