@@ -22,6 +22,7 @@ type PaginationContextType = {
     hasNextPage: boolean;
     startPage: number;
     endPage: number;
+    totalPage: number;
     goToFastPrevPage: () => number;
     goToFastNextPage: () => number;
 };
@@ -40,6 +41,7 @@ const PaginationContext = createContext<PaginationContextType>({
     hasNextPage: false,
     startPage: 1,
     endPage: 1,
+    totalPage: 0,
     goToFastPrevPage: () => 0,
     goToFastNextPage: () => 0,
 });
@@ -151,6 +153,7 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
                 hasNextPage,
                 startPage,
                 endPage,
+                totalPage,
                 goToFastPrevPage,
                 goToFastNextPage,
             }}

@@ -17,8 +17,8 @@ const FastPrev = ({ defaultStyle, onFastPrevClick }: FastPrevProps) => {
 
     return (
         <>
-            {/* 시작 페이지가 0보다 크면(즉, 이전에 더 많은 페이지가 있다면) 빠른 이전 버튼 렌더링 */}
-            {startPage > 0 && (
+            {/* 시작 페이지가 1보다 크면(즉, 이전에 더 많은 페이지가 있다면) 빠른 이전 버튼 렌더링 */}
+            {startPage > 1 && (
                 <button css={[defaultStyle]} onClick={handleFastPrevClick} aria-label="빠른 이전 페이지">
                     {'<<'}
                 </button>
