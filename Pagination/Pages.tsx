@@ -5,11 +5,17 @@ import { usePagination } from './Pagination';
 
 type PagesProps = {
     defaultStyle?: SerializedStyles;
+    onPagesClick?: (pageValue: number) => void;
 };
 
-const Pages = ({ defaultStyle }: PagesProps) => {
+const Pages = ({ defaultStyle, onPagesClick }: PagesProps) => {
     const { paginationValue, goToPage, endPage, startPage } = usePagination();
     const { page } = paginationValue;
+
+    const handlePagesClick = (pageValue: number) => {
+        const newPageValue = goToPage(pageValue);
+        onPagesClick && onPagesClick(newPageValue); // onPagesClick 이���트를 호출
+    };
 
     return (
         <>
@@ -19,7 +25,7 @@ const Pages = ({ defaultStyle }: PagesProps) => {
                 return (
                     <button
                         key={currentPage}
-                        onClick={() => goToPage(currentPage)}
+                        onClick={() => handlePagesClick(currentPage)}
                         disabled={currentPage === page} // 현재 페이지 버튼은 비활성화(혹은 강조)
                         css={[defaultStyle]}
                     >

@@ -16,7 +16,7 @@ type PaginationContextType = {
     paginationValue: PaginationValueType;
     goToPrevPage: () => number;
     goToNextPage: () => number;
-    goToPage: (value: number) => void;
+    goToPage: (value: number) => number;
     changeSize: (value: number) => void;
     hasPrevPage: boolean;
     hasNextPage: boolean;
@@ -35,7 +35,7 @@ const PaginationContext = createContext<PaginationContextType>({
     },
     goToPrevPage: () => 0,
     goToNextPage: () => 0,
-    goToPage: (value) => {},
+    goToPage: (value) => 0,
     changeSize: (value) => {},
     hasPrevPage: false,
     hasNextPage: false,
@@ -103,6 +103,8 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
         newPaginationValue.page = value;
 
         setPaginationValue(newPaginationValue);
+
+        return newPaginationValue.page;
     };
 
     const changeSize = (value: number) => {
