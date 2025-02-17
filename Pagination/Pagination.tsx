@@ -14,17 +14,17 @@ export type PaginationValueType = {
 };
 type PaginationContextType = {
     paginationValue: PaginationValueType;
-    goToPrevPage: () => number;
-    goToNextPage: () => number;
-    goToPage: (value: number) => number;
-    changeSize: (value: number) => void;
+    goToPrevPage: () => PaginationValueType;
+    goToNextPage: () => PaginationValueType;
+    goToPage: (value: number) => PaginationValueType;
+    changeSize: (value: number) => PaginationValueType;
     hasPrevPage: boolean;
     hasNextPage: boolean;
     startPage: number;
     endPage: number;
     totalPage: number;
-    goToFastPrevPage: () => number;
-    goToFastNextPage: () => number;
+    goToFastPrevPage: () => PaginationValueType;
+    goToFastNextPage: () => PaginationValueType;
 };
 
 const PaginationContext = createContext<PaginationContextType>({
@@ -33,17 +33,41 @@ const PaginationContext = createContext<PaginationContextType>({
         size: 0,
         total: 0,
     },
-    goToPrevPage: () => 0,
-    goToNextPage: () => 0,
-    goToPage: (value) => 0,
-    changeSize: (value) => {},
+    goToPrevPage: () => ({
+        page: 1,
+        size: 0,
+        total: 0,
+    }),
+    goToNextPage: () => ({
+        page: 1,
+        size: 0,
+        total: 0,
+    }),
+    goToPage: (value) => ({
+        page: 1,
+        size: 0,
+        total: 0,
+    }),
+    changeSize: (value) => ({
+        page: 1,
+        size: 0,
+        total: 0,
+    }),
     hasPrevPage: false,
     hasNextPage: false,
     startPage: 1,
     endPage: 1,
     totalPage: 0,
-    goToFastPrevPage: () => 0,
-    goToFastNextPage: () => 0,
+    goToFastPrevPage: () => ({
+        page: 1,
+        size: 0,
+        total: 0,
+    }),
+    goToFastNextPage: () => ({
+        page: 1,
+        size: 0,
+        total: 0,
+    }),
 });
 
 type PaginationProps = {
@@ -83,7 +107,7 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
         }
         setPaginationValue(newPaginationValue);
 
-        return newPaginationValue.page;
+        return newPaginationValue;
     };
 
     const goToNextPage = () => {
@@ -95,7 +119,7 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
         }
         setPaginationValue(newPaginationValue);
 
-        return newPaginationValue.page;
+        return newPaginationValue;
     };
 
     const goToPage = (value: number) => {
@@ -104,22 +128,25 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
 
         setPaginationValue(newPaginationValue);
 
-        return newPaginationValue.page;
+        return newPaginationValue;
     };
 
     const changeSize = (value: number) => {
         const newPaginationValue = structuredClone(paginationValue);
         newPaginationValue.size = value;
+        newPaginationValue.page = 1;
 
         setPaginationValue(newPaginationValue);
-    };
 
-    const hasPrevPage = paginationValue.page > 1;
-    const hasNextPage = paginationValue.page < paginationValue.total;
+        return newPaginationValue;
+    };
 
     // 최대 몇 개의 페이지 번호 버튼을 보여줄지 결정
     const maxPageButtons = 5;
     const totalPage = Math.ceil(total / size); // total은 최대 페이지 인덱스이므로 실제 페이지 개수
+
+    const hasPrevPage = paginationValue.page > 1;
+    const hasNextPage = paginationValue.page < totalPage;
 
     // 현재 페이지를 가운데에 두도록 시작/끝 페이지 계산
     let startPage = Math.max(1, page - Math.floor(maxPageButtons / 2));
@@ -132,15 +159,15 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
     // "빠른 이전" 버튼: 현재 페이지에서 maxPageButtons 만큼 뺀 값(또는 0)을 이동
     const goToFastPrevPage = () => {
         const newPage = Math.max(1, page - maxPageButtons);
-        goToPage(newPage);
-        return newPage;
+        const newPaginationValue = goToPage(newPage);
+        return newPaginationValue;
     };
 
     // "빠른 이후" 버튼: 현재 페이지에서 maxPageButtons 만큼 더한 값(또는 total)을 이동
     const goToFastNextPage = () => {
         const newPage = Math.min(totalPage, page + maxPageButtons);
-        goToPage(newPage);
-        return newPage;
+        const newPaginationValue = goToPage(newPage);
+        return newPaginationValue;
     };
 
     return (

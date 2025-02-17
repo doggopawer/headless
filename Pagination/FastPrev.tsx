@@ -1,18 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import { usePagination } from './Pagination';
+import { PaginationValueType, usePagination } from './Pagination';
 import { SerializedStyles } from '@emotion/react';
 
 type FastPrevProps = {
     defaultStyle?: SerializedStyles;
-    onFastPrevClick?: (pageValue: number) => void;
+    onFastPrevClick?: (paginationValue: PaginationValueType) => void;
 };
 
 const FastPrev = ({ defaultStyle, onFastPrevClick }: FastPrevProps) => {
     const { startPage, goToFastPrevPage } = usePagination();
 
     const handleFastPrevClick = () => {
-        const newPage = goToFastPrevPage();
-        onFastPrevClick && onFastPrevClick(newPage);
+        const newPaginationValue = goToFastPrevPage();
+        onFastPrevClick && onFastPrevClick(newPaginationValue);
     };
 
     return (

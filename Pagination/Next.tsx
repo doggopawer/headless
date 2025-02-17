@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import { usePagination } from './Pagination';
+import { PaginationValueType, usePagination } from './Pagination';
 import { SerializedStyles } from '@emotion/react';
 
 type NextProps = {
     children: React.ReactNode;
     defaultStyle?: SerializedStyles;
-    onNextClick?: (pageValue: number) => void;
+    onNextClick?: (paginationValue: PaginationValueType) => void;
 };
 
 const Next = ({ children, defaultStyle, onNextClick }: NextProps) => {
     const { goToNextPage, hasNextPage } = usePagination();
 
     const handleNextButtonClick = () => {
-        const newPageValue = goToNextPage();
-        onNextClick && onNextClick(newPageValue);
+        const newPaginationValue = goToNextPage();
+        onNextClick && onNextClick(newPaginationValue);
     };
 
     const hasNoNextPage = !hasNextPage;

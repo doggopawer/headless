@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { SerializedStyles } from '@emotion/react';
 import React from 'react';
-import { usePagination } from './Pagination';
+import { PaginationValueType, usePagination } from './Pagination';
 
 type PagesProps = {
     defaultStyle?: SerializedStyles;
-    onPagesClick?: (pageValue: number) => void;
+    onPagesClick?: (paginationValue: PaginationValueType) => void;
 };
 
 const Pages = ({ defaultStyle, onPagesClick }: PagesProps) => {
@@ -13,8 +13,8 @@ const Pages = ({ defaultStyle, onPagesClick }: PagesProps) => {
     const { page } = paginationValue;
 
     const handlePagesClick = (pageValue: number) => {
-        const newPageValue = goToPage(pageValue);
-        onPagesClick && onPagesClick(newPageValue); // onPagesClick 이���트를 호출
+        const newPaginationValue = goToPage(pageValue);
+        onPagesClick && onPagesClick(newPaginationValue); // onPagesClick 이���트를 호출
     };
 
     return (
