@@ -1,7 +1,7 @@
 // SelectGroup.js
-import React, {createContext, useContext, useState} from "react";
-import SelectGroupItem from "./SelectGroupItem";
-import SelectGroupDisplay from "./SelectGroupDisplay";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import SelectGroupItem from './SelectGroupItem';
+import SelectGroupDisplay from './SelectGroupDisplay';
 
 type SelectGroupContextType = {
     selectGroupValue: string;
@@ -9,24 +9,22 @@ type SelectGroupContextType = {
 };
 
 const SelectGroupContext = createContext<SelectGroupContextType>({
-    selectGroupValue: "",
-    changeSelectGroupValue: value => {},
+    selectGroupValue: '',
+    changeSelectGroupValue: (value) => {},
 });
 
 type SelectGroupProps = {
     children: React.ReactNode;
-    defaultValue?: string;
+    defaultValue: string;
     onFormChange?: (value: string) => void;
 };
 
-const SelectGroup = ({
-    children,
-    defaultValue,
-    onFormChange,
-}: SelectGroupProps) => {
-    const [selectGroupValue, setSelectGroupValue] = useState(
-        defaultValue ?? "",
-    );
+const SelectGroup = ({ children, defaultValue, onFormChange }: SelectGroupProps) => {
+    const [selectGroupValue, setSelectGroupValue] = useState(defaultValue ?? '');
+
+    useEffect(() => {
+        setSelectGroupValue(defaultValue);
+    }, [defaultValue]);
 
     const changeSelectGroupValue = (value: string) => {
         onFormChange && onFormChange(value);
@@ -34,9 +32,7 @@ const SelectGroup = ({
     };
 
     return (
-        <SelectGroupContext.Provider
-            value={{selectGroupValue, changeSelectGroupValue}}
-        >
+        <SelectGroupContext.Provider value={{ selectGroupValue, changeSelectGroupValue }}>
             {children}
         </SelectGroupContext.Provider>
     );
@@ -50,4 +46,4 @@ export default SelectGroup;
 
 SelectGroup.Display = SelectGroupDisplay;
 SelectGroup.Item = SelectGroupItem;
-SelectGroup.changeHandlerPropName = "onSelectGroupChange";
+SelectGroup.changeHandlerPropName = 'onSelectGroupChange';
