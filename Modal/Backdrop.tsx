@@ -1,20 +1,21 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import React from 'react';
 import { useModal } from './Modal';
 
-const backdropStyle = css`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 투명한 검은색 배경 */
-    z-index: 99; /* 모달보다 더 위에 위치하도록 설정 */
-`;
+type BackdropProps = React.HTMLAttributes<HTMLDivElement>;
 
-const Backdrop = () => {
+const backdropStyle: React.CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 99,
+};
+
+const Backdrop = (props: BackdropProps) => {
     const { modalValue } = useModal();
-    return <>{modalValue && <div css={[backdropStyle]} />}</>;
+    return <>{modalValue && <div style={backdropStyle} {...props} />}</>;
 };
 
 export default Backdrop;

@@ -1,14 +1,11 @@
-/** @jsxImportSource @emotion/react */
-import { css, SerializedStyles } from '@emotion/react';
 import React from 'react';
 
-type VisibleProps = {
+type VisibleProps = React.HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
-    defalutStyle?: SerializedStyles;
 };
 
-const Visible = ({ children, defalutStyle }: VisibleProps) => {
-    return <div css={[defalutStyle]}>{children}</div>;
+const Visible = ({ children, ...props }: VisibleProps) => {
+    return <div {...props}>{children}</div>;
 };
 
 export default Visible;

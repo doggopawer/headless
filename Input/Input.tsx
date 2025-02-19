@@ -1,14 +1,10 @@
-/** @jsxImportSource @emotion/react */
-import { SerializedStyles } from '@emotion/react';
-import { ChangeEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, useState } from 'react';
 
-type InputProps = {
-    defaultStyle?: SerializedStyles;
-    defaultValue?: string;
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     onFormChange?: (value: string) => void;
 };
 
-const Input = ({ defaultValue, defaultStyle, onFormChange }: InputProps) => {
+const Input = ({ defaultValue, onFormChange, style, ...props }: InputProps) => {
     const [inputValue, setInputValue] = useState(defaultValue ?? '');
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -17,7 +13,7 @@ const Input = ({ defaultValue, defaultStyle, onFormChange }: InputProps) => {
         setInputValue(value);
     };
 
-    return <input css={[defaultStyle]} onChange={handleInputChange} value={inputValue} />;
+    return <input style={style} onChange={handleInputChange} value={inputValue} {...props} />;
 };
 
 export default Input;

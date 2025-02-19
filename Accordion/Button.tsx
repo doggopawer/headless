@@ -1,16 +1,14 @@
-/** @jsxImportSource @emotion/react */
-import {SerializedStyles} from "@emotion/react";
-import React, {useEffect} from "react";
-import {useAccordion} from "./Accordion";
+import React, { useEffect } from 'react';
+import { useAccordion } from './Accordion';
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children?: React.ReactNode;
     onButtonClick?: (value: boolean) => void | boolean;
-    defaultStyle?: SerializedStyles; // css를 선택적 속성으로 설정
 };
 
-const Button = ({children, defaultStyle, onButtonClick}: ButtonProps) => {
-    const {accordionValue, toggleAccordion} = useAccordion();
+const Button = ({ children, onButtonClick, ...props }: ButtonProps) => {
+    const { accordionValue, toggleAccordion } = useAccordion();
+
     const handleButtonClick = () => {
         const result = onButtonClick && onButtonClick(accordionValue);
         if (result) {
@@ -18,11 +16,13 @@ const Button = ({children, defaultStyle, onButtonClick}: ButtonProps) => {
         }
         toggleAccordion();
     };
+
     useEffect(() => {
-        console.log("accordionValue", accordionValue);
+        console.log('accordionValue', accordionValue);
     }, [accordionValue]);
+
     return (
-        <button css={[defaultStyle]} onClick={handleButtonClick}>
+        <button {...props} onClick={handleButtonClick}>
             {children}
         </button>
     );

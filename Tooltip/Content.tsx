@@ -1,14 +1,11 @@
-/** @jsxImportSource @emotion/react */
 import React from 'react';
 import { useTooltip } from './Tooltip';
-import { css, SerializedStyles } from '@emotion/react';
 
-type ContentProps = {
+type ContentProps = React.HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
-    defaultStyle: SerializedStyles;
 };
 
-const Content = ({ children, defaultStyle }: ContentProps) => {
+const Content = ({ children, ...props }: ContentProps) => {
     const { tooltipValue, showTooltip, hideTooltip } = useTooltip();
 
     const handleContentShowToggle = () => {
@@ -22,7 +19,7 @@ const Content = ({ children, defaultStyle }: ContentProps) => {
     return (
         <>
             {tooltipValue && (
-                <div css={[defaultStyle]} onMouseOver={handleContentShowToggle} onMouseOut={handleContentHideToggle}>
+                <div onMouseOver={handleContentShowToggle} onMouseOut={handleContentHideToggle} {...props}>
                     {children}
                 </div>
             )}

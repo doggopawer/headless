@@ -1,14 +1,11 @@
-/** @jsxImportSource @emotion/react */
 import React from 'react';
 import { useModal } from './Modal';
-import { SerializedStyles } from '@emotion/react';
 
-type CloseProps = {
+type CloseProps = React.HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
-    defaultStyle?: SerializedStyles; // css를 선택적 속성으로 설정
 };
 
-const Close = ({ children, defaultStyle }: CloseProps) => {
+const Close = ({ children, style, ...props }: CloseProps) => {
     const { closeModal } = useModal();
 
     const handleCloseClick = () => {
@@ -16,7 +13,7 @@ const Close = ({ children, defaultStyle }: CloseProps) => {
     };
 
     return (
-        <div css={[defaultStyle]} onClick={handleCloseClick}>
+        <div {...props} onClick={handleCloseClick} style={style}>
             {children}
         </div>
     );

@@ -1,31 +1,25 @@
-/** @jsxImportSource @emotion/react */
 import React from 'react';
 import { PaginationValueType, usePagination } from './Pagination';
-import { SerializedStyles } from '@emotion/react';
 
-type PrevProps = {
+type PrevProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
-    defaultStyle?: SerializedStyles;
-    disabledStyle?: SerializedStyles;
     onPrevClick?: (paginationValue: PaginationValueType) => void;
 };
 
-const Prev = ({ children, defaultStyle, disabledStyle, onPrevClick }: PrevProps) => {
+const Prev = ({ children, onPrevClick, style, ...props }: PrevProps) => {
     const { goToPrevPage, hasPrevPage } = usePagination();
 
-    const handlePrevButtonClick = () => {
+    const handlePrevButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const newPaginationValue = goToPrevPage();
         onPrevClick && onPrevClick(newPaginationValue);
+        // 기존 onClick 이벤트 핸들러 호출
+        props.onClick && props.onClick(e);
     };
 
     const hasNoPrevPage = !hasPrevPage;
 
     return (
-        <button
-            disabled={hasNoPrevPage}
-            css={[defaultStyle, hasNoPrevPage && disabledStyle]}
-            onClick={handlePrevButtonClick}
-        >
+        <button disabled={hasNoPrevPage} onClick={handlePrevButtonClick} style={style} {...props}>
             {children}
         </button>
     );

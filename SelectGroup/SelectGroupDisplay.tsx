@@ -1,16 +1,12 @@
-/** @jsxImportSource @emotion/react */
-import React from "react";
-import {useSelectGroup} from "./SelectGroup";
-import {SerializedStyles} from "@emotion/react";
+import React from 'react';
+import { useSelectGroup } from './SelectGroup';
 
-type SelectGroupDisplayProps = React.ButtonHTMLAttributes<HTMLDivElement> & {
-    defaultStyle?: SerializedStyles;
-};
+type SelectGroupDisplayProps = React.HTMLAttributes<HTMLDivElement>;
 
-const SelectGroupDisplay = ({defaultStyle}: SelectGroupDisplayProps) => {
-    const {selectGroupValue} = useSelectGroup();
+const SelectGroupDisplay = (props: SelectGroupDisplayProps) => {
+    const { selectGroupValue } = useSelectGroup();
 
-    return <div css={[defaultStyle]}>{selectGroupValue}</div>;
+    return <div {...props}>{selectGroupValue}</div>;
 };
 
 export default SelectGroupDisplay;

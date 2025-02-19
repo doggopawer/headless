@@ -1,6 +1,5 @@
 // Pagination.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import Size from './Size';
 import Prev from './Prev';
 import Next from './Next';
 import Pages from './Pages';
@@ -20,6 +19,8 @@ type PaginationContextType = {
     changeSize: (value: number) => PaginationValueType;
     hasPrevPage: boolean;
     hasNextPage: boolean;
+    hasFastPrevPage: boolean;
+    hasFastNextPage: boolean;
     startPage: number;
     endPage: number;
     totalPage: number;
@@ -55,6 +56,8 @@ const PaginationContext = createContext<PaginationContextType>({
     }),
     hasPrevPage: false,
     hasNextPage: false,
+    hasFastNextPage: false,
+    hasFastPrevPage: false,
     startPage: 1,
     endPage: 1,
     totalPage: 0,
@@ -156,6 +159,9 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
         startPage = Math.max(1, endPage - maxPageButtons + 1);
     }
 
+    const hasFastPrevPage = startPage > 1;
+    const hasFastNextPage = endPage < totalPage;
+
     // "빠른 이전" 버튼: 현재 페이지에서 maxPageButtons 만큼 뺀 값(또는 0)을 이동
     const goToFastPrevPage = () => {
         const newPage = Math.max(1, page - maxPageButtons);
@@ -178,8 +184,10 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
                 goToNextPage,
                 goToPage,
                 changeSize,
+                hasFastPrevPage,
                 hasPrevPage,
                 hasNextPage,
+                hasFastNextPage,
                 startPage,
                 endPage,
                 totalPage,
@@ -198,7 +206,6 @@ export const usePagination = () => {
 
 export default Pagination;
 
-Pagination.Size = Size;
 Pagination.Prev = Prev;
 Pagination.Next = Next;
 Pagination.Pages = Pages;

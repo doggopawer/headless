@@ -1,41 +1,33 @@
-/** @jsxImportSource @emotion/react */
+import React from 'react';
 import { PaginationValueType, usePagination } from './Pagination';
-import { SerializedStyles } from '@emotion/react';
 
-type FastPrevProps = {
+type FastPrevProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
-    defaultStyle?: SerializedStyles;
-    disabledStyle?: SerializedStyles; // css를 선택적 속성으로 설정
     onFastPrevClick?: (paginationValue: PaginationValueType) => void;
 };
 
-const FastPrev = ({ children, defaultStyle, disabledStyle, onFastPrevClick }: FastPrevProps) => {
+const FastPrev = ({ children, onFastPrevClick, style, ...props }: FastPrevProps) => {
     const { startPage, goToFastPrevPage } = usePagination();
 
-    const handleFastPrevClick = () => {
+    const handleFastPrevClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const newPaginationValue = goToFastPrevPage();
         onFastPrevClick && onFastPrevClick(newPaginationValue);
+        props.onClick && props.onClick(e);
     };
 
     const hasFastPrevPage = startPage > 1;
     const hasNoFastPrevPage = !hasFastPrevPage;
 
     return (
-        <>
-            {/* 시작 페이지가 1보다 크면(즉, 이전에 더 많은 페이지가 있다면) 빠른 이전 버튼 렌더링 */}
-            {
-                // startPage > 1 &&
-
-                <button
-                    disabled={hasNoFastPrevPage}
-                    css={[defaultStyle, hasNoFastPrevPage && disabledStyle]}
-                    onClick={handleFastPrevClick}
-                    aria-label="빠른 이전 페이지"
-                >
-                    {children}
-                </button>
-            }
-        </>
+        <button
+            disabled={hasNoFastPrevPage}
+            onClick={handleFastPrevClick}
+            aria-label="빠른 이전 페이지"
+            style={style}
+            {...props}
+        >
+            {children}
+        </button>
     );
 };
 

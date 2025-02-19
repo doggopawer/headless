@@ -1,22 +1,19 @@
-/** @jsxImportSource @emotion/react */
-import React from "react";
-import {useModal} from "./Modal";
-import {SerializedStyles} from "@emotion/react";
+import React from 'react';
+import { useModal } from './Modal';
 
-type TriggerProps = {
+type TriggerProps = React.HTMLAttributes<HTMLSpanElement> & {
     children: React.ReactNode;
-    defaultStyle?: SerializedStyles; // css를 선택적 속성으로 설정
 };
 
-const Trigger = ({children, defaultStyle}: TriggerProps) => {
-    const {openModal} = useModal();
+const Trigger = ({ children, style, ...props }: TriggerProps) => {
+    const { openModal } = useModal();
 
     const handleTriggerClick = () => {
         openModal();
     };
 
     return (
-        <span css={[defaultStyle]} onClick={handleTriggerClick}>
+        <span {...props} onClick={handleTriggerClick} style={style}>
             {children}
         </span>
     );

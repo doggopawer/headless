@@ -1,14 +1,11 @@
-/** @jsxImportSource @emotion/react */
 import React, { useEffect } from 'react';
 import { useTooltip } from './Tooltip';
-import { SerializedStyles } from '@emotion/react';
 
-type TriggerProps = {
+type TriggerProps = React.HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
-    defaultStyle?: SerializedStyles;
 };
 
-const Trigger = ({ children, defaultStyle }: TriggerProps) => {
+const Trigger = ({ children, ...props }: TriggerProps) => {
     const { tooltipValue, showTooltip, hideTooltip } = useTooltip();
 
     const handleContentShowToggle = () => {
@@ -24,7 +21,7 @@ const Trigger = ({ children, defaultStyle }: TriggerProps) => {
     }, [tooltipValue]);
 
     return (
-        <div css={[defaultStyle]} onMouseOver={handleContentShowToggle} onMouseOut={handleContentHideToggle}>
+        <div onMouseOver={handleContentShowToggle} onMouseOut={handleContentHideToggle} {...props}>
             {children}
         </div>
     );

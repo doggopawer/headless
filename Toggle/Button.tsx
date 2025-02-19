@@ -1,14 +1,12 @@
-/** @jsxImportSource @emotion/react */
 import React, { useEffect } from 'react';
 import { useToggle } from './Toggle';
-import { SerializedStyles } from '@emotion/react';
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children?: React.ReactNode;
     onButtonClick?: (value: boolean) => void;
-    defaultStyle?: SerializedStyles;
 };
-const Button: React.FC<ButtonProps> = ({ children, onButtonClick, defaultStyle }) => {
+
+const Button: React.FC<ButtonProps> = ({ children, onButtonClick, style, ...props }) => {
     const { toggleValue, changeToggle } = useToggle();
 
     const handleButtonClick = (value: boolean) => {
@@ -21,9 +19,10 @@ const Button: React.FC<ButtonProps> = ({ children, onButtonClick, defaultStyle }
     }, [toggleValue]);
 
     return (
-        <button css={[defaultStyle]} onClick={() => handleButtonClick(toggleValue)}>
+        <button onClick={() => handleButtonClick(toggleValue)} style={style} {...props}>
             {toggleValue ? 'ON' : 'OFF'}
         </button>
     );
 };
+
 export default Button;
