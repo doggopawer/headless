@@ -1,5 +1,4 @@
-// Modal.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import Trigger from './Trigger';
 import Backdrop from './Backdrop';
 import Close from './Close';
@@ -31,6 +30,21 @@ const Modal = ({ children }: ModalProps) => {
     const closeModal = () => {
         setModalValue(false);
     };
+
+    useEffect(() => {
+        if (modalValue) {
+            // 모달이 열릴 때 배경 스크롤 방지
+            document.body.style.overflow = 'hidden';
+        } else {
+            // 모달이 닫힐 때 배경 스크롤 허용
+            document.body.style.overflow = '';
+        }
+
+        // 컴포넌트 언마운트 시 배경 스크롤 허용
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [modalValue]);
 
     return <ModalContext.Provider value={{ modalValue, openModal, closeModal }}>{children}</ModalContext.Provider>;
 };
