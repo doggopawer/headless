@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import Button from './Button';
 
 type ToggleContextType = {
@@ -18,6 +18,10 @@ type ToggleProps = {
 
 const Toggle = ({ children, defaultValue }: ToggleProps) => {
     const [toggleValue, setToggleValue] = useState(defaultValue ?? false);
+
+    useEffect(() => {
+        setToggleValue(defaultValue ?? false);
+    }, [defaultValue]);
 
     const changeToggle = () => {
         setToggleValue((prev) => !prev);
