@@ -5,16 +5,19 @@ import TabGroupItem from './TabGroupItem';
 type TabGroupContextType = {
     tabGroupValue: string;
     changeTabGroupValue: (value: string) => void;
+    isActiveTab: (value: any) => boolean;
 };
 
 const TabGroupContext = createContext<TabGroupContextType>({
     tabGroupValue: '',
     changeTabGroupValue: () => {},
+    isActiveTab: () => false,
 });
 
 type TabGroupProps = {
     children: React.ReactNode;
     defaultValue: string;
+    isActiveTab?: (value: any) => boolean;
 };
 
 const TabGroup = ({ children, defaultValue }: TabGroupProps) => {
@@ -24,8 +27,13 @@ const TabGroup = ({ children, defaultValue }: TabGroupProps) => {
         setTabGroup(value);
     };
 
+    const isActiveTab = (value: any) => {
+        return value === tabGroupValue;
+    }
+
+
     return (
-        <TabGroupContext.Provider value={{ tabGroupValue, changeTabGroupValue }}>{children}</TabGroupContext.Provider>
+        <TabGroupContext.Provider value={{ tabGroupValue, changeTabGroupValue, isActiveTab }}>{children}</TabGroupContext.Provider>
     );
 };
 
