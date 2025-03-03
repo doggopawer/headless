@@ -1,20 +1,27 @@
-import React, { useEffect } from 'react';
-import { useCheckboxGroup } from './CheckboxGroup';
+import React, {useEffect} from "react";
+import {useCheckboxGroup} from "./CheckboxGroup";
 
 type CheckboxGroupItemProps = React.HTMLAttributes<HTMLDivElement> & {
     value: string;
     children: React.ReactNode;
+    onCheckboxGroupItemClick: (value: string[]) => void;
 };
 
-const CheckboxGroupItem = ({ value, children, ...props }: CheckboxGroupItemProps) => {
-    const { checkboxGroupValue, toggleCheckboxGroupValue } = useCheckboxGroup();
+const CheckboxGroupItem = ({
+    value,
+    children,
+    onCheckboxGroupItemClick,
+    ...props
+}: CheckboxGroupItemProps) => {
+    const {checkboxGroupValue, toggleCheckboxGroupValue} = useCheckboxGroup();
 
     const handleCheckboxGroupItem = () => {
-        toggleCheckboxGroupValue(value);
+        const newCheckboxGroupValue = toggleCheckboxGroupValue(value);
+        onCheckboxGroupItemClick(newCheckboxGroupValue);
     };
 
     useEffect(() => {
-        console.log('checkboxValue', checkboxGroupValue);
+        console.log("checkboxValue", checkboxGroupValue);
     }, [checkboxGroupValue]);
 
     return (
