@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react';
-import { useTabGroup } from './TabGroup';
+import React, {useEffect} from "react";
+import {useTabGroup} from "./TabGroup";
 
 type TabGroupItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     value: string;
     children?: React.ReactNode;
-    onTabGroupItemClick?: (value: string) => void;
+    onTabGroupItemClick: (value: string) => void;
 };
 
-const TabGroupItem = ({ value, children, onTabGroupItemClick, ...props }: TabGroupItemProps) => {
-    const { tabGroupValue, changeTabGroupValue } = useTabGroup();
+const TabGroupItem = ({
+    value,
+    children,
+    onTabGroupItemClick,
+    ...props
+}: TabGroupItemProps) => {
+    const {tabGroupValue, changeTabGroupValue} = useTabGroup();
 
     const handleChangeTab = (value: string) => {
         changeTabGroupValue(value);
@@ -16,7 +21,7 @@ const TabGroupItem = ({ value, children, onTabGroupItemClick, ...props }: TabGro
     };
 
     useEffect(() => {
-        console.log('현재 값', tabGroupValue);
+        console.log("현재 값", tabGroupValue);
     }, [tabGroupValue]);
 
     return (
