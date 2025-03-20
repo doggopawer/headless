@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({ children, onButtonClick, style, ...prop
 
     return (
         <button onClick={() => handleButtonClick(toggleValue)} style={style} {...props}>
-            {toggleValue ? 'ON' : 'OFF'}
+            {children}
         </button>
     );
 };
