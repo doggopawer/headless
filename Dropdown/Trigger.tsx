@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useDropdown } from './Dropdown';
 
 type TriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
-    onTriggerClick?: () => void;
 };
 
-const Trigger = ({ children, onTriggerClick, ...props }: TriggerProps) => {
+const Trigger = ({ children, ...props }: TriggerProps) => {
     const { dropdownValue, toggleDropdown } = useDropdown();
 
-    const handleTriggerClick = () => {
-        onTriggerClick && onTriggerClick();
+    const handleTriggerClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+        props.onClick && props.onClick(e);
         toggleDropdown();
     };
 
