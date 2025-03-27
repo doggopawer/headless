@@ -1,0 +1,10 @@
+.Content {
+    &.Closed {
+        opacity: 0;
+        pointer-events: none; /* 클릭 방지 */
+    }
+
+    &.Open {
+        opacity: 1;
+    }
+}
