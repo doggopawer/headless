@@ -15,7 +15,7 @@ const Trigger = ({ children, ...props }: TriggerProps) => {
 
     // 이벤트 캡쳐링 방지
     const handleTriggerMouseDownCapture = (event: React.MouseEvent<HTMLButtonElement>) => {
-        // event.stopPropagation();
+        dropdownValue && event.stopPropagation();
     };
 
     return (
