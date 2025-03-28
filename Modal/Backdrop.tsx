@@ -1,21 +1,16 @@
 import React from 'react';
 import { useModal } from './Modal';
+import classNames from 'classnames';
+import styles from './Modal.module.scss';
 
 type BackdropProps = React.HTMLAttributes<HTMLDivElement>;
 
-const backdropStyle: React.CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 99,
-};
-
 const Backdrop = (props: BackdropProps) => {
     const { modalValue } = useModal();
-    return <>{modalValue && <div style={backdropStyle} {...props} />}</>;
+
+    const combinedStyle = classNames(styles.Backdrop, props.className);
+
+    return <>{modalValue && <div {...props} className={combinedStyle} />}</>;
 };
 
 export default Backdrop;
