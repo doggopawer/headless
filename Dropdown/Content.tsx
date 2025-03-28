@@ -1,5 +1,7 @@
-import React, { useRef, useEffect, useState, useLayoutEffect } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import { useDropdown } from './Dropdown';
+import classNames from 'classnames';
+import styles from './Dropdown.module.scss';
 
 type ContentProps = React.HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
@@ -23,8 +25,6 @@ const Content = ({ children, ...props }: ContentProps) => {
             const rect = containerRef.current?.getBoundingClientRect();
             if (rect) {
                 const overflow = rect.right - window.innerWidth;
-                console.log(rect.right, window.innerWidth);
-                console.log('overflow: ' + overflow);
                 if (overflow > 0) {
                     setOffset(rect.width);
                 } else {
@@ -40,18 +40,24 @@ const Content = ({ children, ...props }: ContentProps) => {
         };
     }, [dropdownValue, closeDropdown]);
 
+    const combinedStyle = classNames(
+        props.className, // 외부에서 전달받은 클래스
+        styles.Content,
+        {
+            [styles.Open]: dropdownValue, // dropdownValue가 true일 때 Open 클래스 적용
+            [styles.Closed]: !dropdownValue, // dropdownValue가 false일 때 Closed 클래스 적용
+        }
+    );
+
     return (
-        <>
-            {dropdownValue && (
-                <div
-                    ref={containerRef}
-                    {...props}
-                    style={{ transform: offset ? `translateX(-${offset}px)` : undefined }}
-                >
-                    {children}
-                </div>
-            )}
-        </>
+        <div
+            ref={containerRef}
+            {...props}
+            style={{ transform: offset ? `translateX(-${offset}px)` : undefined }}
+            className={combinedStyle}
+        >
+            {children}
+        </div>
     );
 };
 
