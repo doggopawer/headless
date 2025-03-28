@@ -8,9 +8,12 @@ type BackdropProps = React.HTMLAttributes<HTMLDivElement>;
 const Backdrop = (props: BackdropProps) => {
     const { modalValue } = useModal();
 
-    const combinedStyle = classNames(styles.Backdrop, props.className);
+    const combinedStyle = classNames(props.className, styles.Backdrop, {
+        [styles.Open]: modalValue, // dropdownValue가 true일 때 Open 클래스 적용
+        [styles.Closed]: !modalValue, // dropdownValue가 false일 때 Closed 클래스 적용
+    });
 
-    return <>{modalValue && <div {...props} className={combinedStyle} />}</>;
+    return <div {...props} className={combinedStyle} />;
 };
 
 export default Backdrop;

@@ -36,13 +36,16 @@ const Content = ({ children, style, ...props }: ContentProps) => {
         };
     }, [modalValue, closeModal]);
 
+    const combinedStyle = classNames(props.className, styles.Content, {
+        [styles.Open]: modalValue, // dropdownValue가 true일 때 Open 클래스 적용
+        [styles.Closed]: !modalValue, // dropdownValue가 false일 때 Closed 클래스 적용
+    });
+
     return (
         <>
-            {modalValue && (
-                <div ref={containerRef} {...props} className={classNames(styles.Content, props.className)}>
-                    {children}
-                </div>
-            )}
+            <div ref={containerRef} {...props} className={combinedStyle}>
+                {children}
+            </div>
         </>
     );
 };

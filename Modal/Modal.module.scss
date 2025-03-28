@@ -5,6 +5,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 200;
+    &.Closed {
+        opacity: 0;
+        pointer-events: none; /* 클릭 방지 */
+    }
+
+    &.Open {
+        opacity: 1;
+    }
 }
 
 .Backdrop {
@@ -15,4 +23,13 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 99;
+
+    &.Closed {
+        opacity: 0;
+        pointer-events: none; /* 클릭 방지 */
+    }
+
+    &.Open {
+        opacity: 1;
+    }
 }
