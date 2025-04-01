@@ -20,21 +20,22 @@ const Content = ({ children, style, ...props }: ContentProps) => {
     const { modalValue, closeModal } = useModal();
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                closeModal();
-            }
-        };
+    // useEffect(() => {
+    //     const handleClickOutside = (event: MouseEvent) => {
+    //         event.stopPropagation();
+    //         if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+    //             closeModal();
+    //         }
+    //     };
 
-        if (modalValue) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
+    //     if (modalValue) {
+    //         document.addEventListener('mousedown', handleClickOutside);
+    //     }
 
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [modalValue, closeModal]);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     };
+    // }, [modalValue, closeModal]);
 
     const combinedStyle = classNames(props.className, styles.Content, {
         [styles.Open]: modalValue, // dropdownValue가 true일 때 Open 클래스 적용
