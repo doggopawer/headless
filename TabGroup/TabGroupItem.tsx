@@ -4,7 +4,7 @@ import {useTabGroup} from "./TabGroup";
 type TabGroupItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     value: string;
     children?: React.ReactNode;
-    onTabGroupItemClick: (value: string) => void;
+    onTabGroupItemClick?: (value: string) => void;
 };
 
 const TabGroupItem = ({
