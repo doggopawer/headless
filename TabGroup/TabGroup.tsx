@@ -1,5 +1,5 @@
 // TabGroup.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import TabGroupItem from './TabGroupItem';
 
 type TabGroupContextType = {
@@ -23,17 +23,22 @@ type TabGroupProps = {
 const TabGroup = ({ children, defaultValue }: TabGroupProps) => {
     const [tabGroupValue, setTabGroup] = useState(defaultValue ?? '');
 
+    useEffect(() => {
+        setTabGroup(defaultValue);
+    }, [defaultValue]);
+
     const changeTabGroupValue = (value: string) => {
         setTabGroup(value);
     };
 
     const isActiveTab = (value: any) => {
         return value === tabGroupValue;
-    }
-
+    };
 
     return (
-        <TabGroupContext.Provider value={{ tabGroupValue, changeTabGroupValue, isActiveTab }}>{children}</TabGroupContext.Provider>
+        <TabGroupContext.Provider value={{ tabGroupValue, changeTabGroupValue, isActiveTab }}>
+            {children}
+        </TabGroupContext.Provider>
     );
 };
 
