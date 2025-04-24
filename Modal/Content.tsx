@@ -44,7 +44,7 @@ const Content = ({ children, style, ...props }: ContentProps) => {
 
     return (
         <>
-            <div ref={containerRef} {...props} className={combinedStyle}>
+            <div ref={containerRef} {...props} className={combinedStyle} style={{ ...style }}>
                 {children}
             </div>
         </>
