@@ -10,8 +10,7 @@ const Button: React.FC<ButtonProps> = ({ children, onButtonClick, style, ...prop
     const { toggleValue, changeToggle } = useToggle();
 
     const handleButtonClick = (value: boolean) => {
-        onButtonClick && onButtonClick(value);
-        changeToggle();
+        onButtonClick && onButtonClick(changeToggle());
     };
 
     useEffect(() => {

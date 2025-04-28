@@ -3,12 +3,12 @@ import Button from './Button';
 
 type ToggleContextType = {
     toggleValue: boolean;
-    changeToggle: () => void;
+    changeToggle: () => boolean;
 };
 
 const ToggleContext = createContext<ToggleContextType>({
     toggleValue: false,
-    changeToggle: () => {},
+    changeToggle: () => true,
 });
 
 type ToggleProps = {
@@ -25,6 +25,8 @@ const Toggle = ({ children, defaultValue }: ToggleProps) => {
 
     const changeToggle = () => {
         setToggleValue((prev) => !prev);
+
+        return !toggleValue;
     };
 
     return <ToggleContext.Provider value={{ toggleValue, changeToggle }}>{children}</ToggleContext.Provider>;
