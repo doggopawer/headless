@@ -1,11 +1,14 @@
-// TabGroup.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
+// TabGroup.tsx
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import TabGroupItem from './TabGroupItem';
 
+// 1) 탭에서 사용할 값 타입 정의 (string 또는 boolean)
+export type TabValue = string | boolean;
+
 type TabGroupContextType = {
-    tabGroupValue: string;
-    changeTabGroupValue: (value: string) => void;
-    isActiveTab: (value: any) => boolean;
+    tabGroupValue: TabValue;
+    changeTabGroupValue: (value: TabValue) => void;
+    isActiveTab: (value: TabValue) => boolean;
 };
 
 const TabGroupContext = createContext<TabGroupContextType>({
@@ -15,23 +18,24 @@ const TabGroupContext = createContext<TabGroupContextType>({
 });
 
 type TabGroupProps = {
-    children: React.ReactNode;
-    defaultValue: string;
-    isActiveTab?: (value: any) => boolean;
+    children: ReactNode;
+    defaultValue: TabValue;
 };
 
-const TabGroup = ({ children, defaultValue }: TabGroupProps) => {
-    const [tabGroupValue, setTabGroup] = useState(defaultValue ?? '');
+const TabGroup: React.FC<TabGroupProps> & {
+    Item: typeof TabGroupItem;
+} = ({ children, defaultValue }) => {
+    const [tabGroupValue, setTabGroupValue] = useState<TabValue>(defaultValue);
 
     useEffect(() => {
-        setTabGroup(defaultValue);
+        setTabGroupValue(defaultValue);
     }, [defaultValue]);
 
-    const changeTabGroupValue = (value: string) => {
-        setTabGroup(value);
+    const changeTabGroupValue = (value: TabValue) => {
+        setTabGroupValue(value);
     };
 
-    const isActiveTab = (value: any) => {
+    const isActiveTab = (value: TabValue) => {
         return value === tabGroupValue;
     };
 
@@ -42,10 +46,8 @@ const TabGroup = ({ children, defaultValue }: TabGroupProps) => {
     );
 };
 
-export const useTabGroup = () => {
-    return useContext(TabGroupContext);
-};
-
-export default TabGroup;
+export const useTabGroup = () => useContext(TabGroupContext);
 
 TabGroup.Item = TabGroupItem;
+
+export default TabGroup;
