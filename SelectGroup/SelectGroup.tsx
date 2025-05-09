@@ -4,8 +4,8 @@ import SelectGroupItem from './SelectGroupItem';
 import SelectGroupDisplay from './SelectGroupDisplay';
 
 type SelectGroupContextType = {
-    selectGroupValue: string;
-    changeSelectGroupValue: (value: string) => void;
+    selectGroupValue: string | { label: string; value: string };
+    changeSelectGroupValue: (value: string | { label: string; value: string }) => void;
 };
 
 const SelectGroupContext = createContext<SelectGroupContextType>({
@@ -15,8 +15,8 @@ const SelectGroupContext = createContext<SelectGroupContextType>({
 
 type SelectGroupProps = {
     children: React.ReactNode;
-    defaultValue: string;
-    onFormChange?: (value: string) => void;
+    defaultValue: string | { label: string; value: string };
+    onFormChange?: (value: string | { label: string; value: string }) => void;
 };
 
 const SelectGroup = ({ children, defaultValue, onFormChange }: SelectGroupProps) => {
@@ -26,7 +26,7 @@ const SelectGroup = ({ children, defaultValue, onFormChange }: SelectGroupProps)
         setSelectGroupValue(defaultValue);
     }, [defaultValue]);
 
-    const changeSelectGroupValue = (value: string) => {
+    const changeSelectGroupValue = (value: string | { label: string; value: string }) => {
         onFormChange && onFormChange(value);
         setSelectGroupValue(value);
     };

@@ -6,7 +6,9 @@ type SelectGroupDisplayProps = React.HTMLAttributes<HTMLDivElement>;
 const SelectGroupDisplay = (props: SelectGroupDisplayProps) => {
     const { selectGroupValue } = useSelectGroup();
 
-    return <div {...props}>{selectGroupValue}</div>;
+    const displayValue = typeof selectGroupValue === 'string' ? selectGroupValue : selectGroupValue.label;
+
+    return <div {...props}>{displayValue}</div>;
 };
 
 export default SelectGroupDisplay;
