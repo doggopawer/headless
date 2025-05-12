@@ -20,7 +20,9 @@ type SelectGroupProps = {
 };
 
 const SelectGroup = ({ children, defaultValue, onFormChange }: SelectGroupProps) => {
-    const [selectGroupValue, setSelectGroupValue] = useState(defaultValue ?? '');
+    const [selectGroupValue, setSelectGroupValue] = useState<string | { label: string; value: string }>(
+        defaultValue ?? ''
+    );
 
     useEffect(() => {
         setSelectGroupValue(defaultValue);
