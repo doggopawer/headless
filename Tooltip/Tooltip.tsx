@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, HTMLAttributes, useContext, useState } from 'react';
 import Trigger from './Trigger';
 import Box from './Box';
 import Content from './Content';
+import styles from './Tooltip.module.scss';
 
 type TooltipContextType = {
     tooltipValue: boolean;
@@ -15,11 +16,11 @@ const TooltipContext = createContext<TooltipContextType>({
     hideTooltip: () => {},
 });
 
-type TooltipProps = {
+type TooltipProps = HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
 };
 
-const Tooltip = ({ children }: TooltipProps) => {
+const Tooltip = ({ children, ...props }: TooltipProps) => {
     const [tooltipValue, setTooltipValue] = useState(false);
 
     const showTooltip = () => {
@@ -31,7 +32,11 @@ const Tooltip = ({ children }: TooltipProps) => {
     };
 
     return (
-        <TooltipContext.Provider value={{ tooltipValue, showTooltip, hideTooltip }}>{children}</TooltipContext.Provider>
+        <TooltipContext.Provider value={{ tooltipValue, showTooltip, hideTooltip }}>
+            <div {...props} className={styles.Tooltip}>
+                {children}
+            </div>
+        </TooltipContext.Provider>
     );
 };
 
@@ -43,4 +48,4 @@ export default Tooltip;
 
 Tooltip.Trigger = Trigger;
 Tooltip.Content = Content;
-Tooltip.Box = Box;
+// Tooltip.Box = Box;
