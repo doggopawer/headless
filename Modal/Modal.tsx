@@ -18,10 +18,15 @@ const ModalContext = createContext<ModalContextType>({
 
 type ModalProps = {
     children: React.ReactNode;
+    defaultValue?: boolean;
 };
 
-const Modal = ({ children }: ModalProps) => {
-    const [modalValue, setModalValue] = useState(false);
+const Modal = ({ children, defaultValue = false }: ModalProps) => {
+    const [modalValue, setModalValue] = useState(defaultValue);
+
+    useEffect(() => {
+        setModalValue(defaultValue);
+    }, [defaultValue]);
 
     const openModal = () => {
         setModalValue(true);
