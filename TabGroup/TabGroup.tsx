@@ -27,9 +27,9 @@ const TabGroup: React.FC<TabGroupProps> & {
 } = ({ children, defaultValue }) => {
     const [tabGroupValue, setTabGroupValue] = useState<TabValue>(defaultValue);
 
-    useEffect(() => {
-        setTabGroupValue(defaultValue);
-    }, [defaultValue]);
+    // useEffect(() => {
+    //     setTabGroupValue(defaultValue);
+    // }, [defaultValue]);
 
     const changeTabGroupValue = (value: TabValue) => {
         setTabGroupValue(value);
