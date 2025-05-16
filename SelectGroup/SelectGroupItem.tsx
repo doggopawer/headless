@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelectGroup } from './SelectGroup';
 
-export type SelectGroupValue = string | { label: string; value: string };
+export type SelectGroupValue = string | { label: string; value: any };
 
 type SelectGroupItemProps = React.HTMLAttributes<HTMLLIElement> & {
     children: React.ReactNode;
     value: SelectGroupValue;
-    onSelectGroupItemClick?: (value: string | { label: string; value: string }) => void;
+    onSelectGroupItemClick?: (value: SelectGroupValue) => void;
 };
 
 const SelectGroupItem = ({ children, value, onSelectGroupItemClick, ...props }: SelectGroupItemProps) => {

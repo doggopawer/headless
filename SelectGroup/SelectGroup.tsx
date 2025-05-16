@@ -24,9 +24,10 @@ const SelectGroup = ({ children, defaultValue, onFormChange }: SelectGroupProps)
         defaultValue ?? ''
     );
 
-    useEffect(() => {
-        setSelectGroupValue(defaultValue);
-    }, [defaultValue]);
+    // useEffect(() => {
+    //     console.log('기본값이 변했습니다.', defaultValue);
+    //     setSelectGroupValue(defaultValue);
+    // }, [defaultValue]);
 
     const changeSelectGroupValue = (value: string | { label: string; value: string }) => {
         onFormChange && onFormChange(value);
