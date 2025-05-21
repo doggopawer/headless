@@ -1,5 +1,6 @@
 // SelectGroup.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import isEqual from 'lodash/isEqual';
 import SelectGroupItem, { SelectGroupValue } from './SelectGroupItem';
 import SelectGroupDisplay from './SelectGroupDisplay';
 
@@ -20,16 +21,20 @@ type SelectGroupProps = {
 };
 
 const SelectGroup = ({ children, defaultValue, onFormChange }: SelectGroupProps) => {
-    const [selectGroupValue, setSelectGroupValue] = useState<string | { label: string; value: string }>(
-        defaultValue ?? ''
-    );
+    const [selectGroupValue, setSelectGroupValue] = useState<SelectGroupValue>(() => defaultValue ?? '');
+    const prevDefaultValueRef = useRef<SelectGroupValue>(defaultValue);
 
-    // useEffect(() => {
-    //     console.log('기본값이 변했습니다.', defaultValue);
-    //     setSelectGroupValue(defaultValue);
-    // }, [defaultValue]);
+    useEffect(() => {
+        const hasChanged = !isEqual(prevDefaultValueRef.current, defaultValue);
 
-    const changeSelectGroupValue = (value: string | { label: string; value: string }) => {
+        if (hasChanged) {
+            console.log('기본값이 실제로 변경되었습니다.', defaultValue);
+            setSelectGroupValue(defaultValue);
+            prevDefaultValueRef.current = defaultValue;
+        }
+    }, [defaultValue]);
+
+    const changeSelectGroupValue = (value: SelectGroupValue) => {
         onFormChange && onFormChange(value);
         setSelectGroupValue(value);
     };
