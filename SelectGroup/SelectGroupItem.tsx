@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelectGroup } from './SelectGroup';
 
-export type SelectGroupValue = string | { label: string; value: any };
+type SelectGroupObject = { label: string; value: string };
+export type SelectGroupValue = string | SelectGroupObject;
 
 type SelectGroupItemProps = React.HTMLAttributes<HTMLLIElement> & {
-    children: React.ReactNode;
+    // children: React.ReactNode;
     value: SelectGroupValue;
     onSelectGroupItemClick?: (value: SelectGroupValue) => void;
 };
@@ -17,9 +18,11 @@ const SelectGroupItem = ({ children, value, onSelectGroupItemClick, ...props }: 
         changeSelectGroupValue(value);
     };
 
+    const displayLabel = typeof value === 'string' ? value : value.label;
+
     return (
         <li {...props} onClick={() => handleSelectGroupItemClick(value)}>
-            {children}
+            {displayLabel} {children}
         </li>
     );
 };

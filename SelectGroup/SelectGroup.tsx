@@ -1,11 +1,11 @@
 // SelectGroup.js
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import SelectGroupItem from './SelectGroupItem';
+import SelectGroupItem, { SelectGroupValue } from './SelectGroupItem';
 import SelectGroupDisplay from './SelectGroupDisplay';
 
 type SelectGroupContextType = {
-    selectGroupValue: string | { label: string; value: string };
-    changeSelectGroupValue: (value: string | { label: string; value: string }) => void;
+    selectGroupValue: SelectGroupValue;
+    changeSelectGroupValue: (value: SelectGroupValue) => void;
 };
 
 const SelectGroupContext = createContext<SelectGroupContextType>({
@@ -15,8 +15,8 @@ const SelectGroupContext = createContext<SelectGroupContextType>({
 
 type SelectGroupProps = {
     children: React.ReactNode;
-    defaultValue: string | { label: string; value: string };
-    onFormChange?: (value: string | { label: string; value: string }) => void;
+    defaultValue: SelectGroupValue;
+    onFormChange?: (value: SelectGroupValue) => void;
 };
 
 const SelectGroup = ({ children, defaultValue, onFormChange }: SelectGroupProps) => {
