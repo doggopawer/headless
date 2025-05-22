@@ -1,0 +1,10 @@
+.Toast {
+    &.Closed {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &.Open {
+        opacity: 1;
+    }
+}
