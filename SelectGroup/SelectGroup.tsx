@@ -28,7 +28,7 @@ const SelectGroup = ({ children, defaultValue, onFormChange }: SelectGroupProps)
         const hasChanged = !isEqual(prevDefaultValueRef.current, defaultValue);
 
         if (hasChanged) {
-            console.log('기본값이 실제로 변경되었습니다.', defaultValue);
+            // console.log('기본값이 실제로 변경되었습니다.', defaultValue);
             setSelectGroupValue(defaultValue);
             prevDefaultValueRef.current = defaultValue;
         }

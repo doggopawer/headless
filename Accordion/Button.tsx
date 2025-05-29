@@ -18,7 +18,7 @@ const Button = ({ children, onButtonClick, ...props }: ButtonProps) => {
     };
 
     useEffect(() => {
-        console.log('accordionValue', accordionValue);
+        // console.log('accordionValue', accordionValue);
     }, [accordionValue]);
 
     return (

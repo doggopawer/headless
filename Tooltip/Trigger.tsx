@@ -17,7 +17,7 @@ const Trigger = ({ children, ...props }: TriggerProps) => {
     };
 
     useEffect(() => {
-        console.log('tooltipValue:', tooltipValue);
+        // console.log('tooltipValue:', tooltipValue);
     }, [tooltipValue]);
 
     return (

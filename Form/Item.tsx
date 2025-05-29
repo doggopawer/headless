@@ -14,7 +14,7 @@ const Item = ({ children, name }: ItemProps) => {
     };
 
     useEffect(() => {
-        console.log('formValue', formValue);
+        // console.log('formValue', formValue);
     }, [formValue]);
 
     const childWithProps = React.cloneElement(

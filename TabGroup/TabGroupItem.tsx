@@ -18,7 +18,7 @@ const TabGroupItem: React.FC<TabGroupItemProps> = ({ value, children, onTabGroup
     };
 
     useEffect(() => {
-        console.log('현재 값', tabGroupValue);
+        // console.log('현재 값', tabGroupValue);
     }, [tabGroupValue]);
 
     return (

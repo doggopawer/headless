@@ -97,7 +97,7 @@ const Pagination = ({ children, defaultValue }: PaginationProps) => {
         );
     }, [defaultValue]);
 
-    console.log('변경', paginationValue);
+    // console.log('변경', paginationValue);
 
     const { page, size, total } = paginationValue;
 

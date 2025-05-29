@@ -21,7 +21,7 @@ const Pages = ({ onPagesClick, activeClassName = '', ...props }: PagesProps) => 
                 const currentPage = startPage + index;
                 const isActive = currentPage === page;
                 const combinedClassName = `${props.className} ${isActive ? activeClassName : ''}`.trim();
-                console.log(combinedClassName, 'combined');
+                // console.log(combinedClassName, 'combined');
                 return (
                     <button
                         key={currentPage}

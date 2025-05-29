@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({ children, onButtonClick, style, ...prop
     };
 
     useEffect(() => {
-        console.log('toggleValue:', toggleValue);
+        // console.log('toggleValue:', toggleValue);
     }, [toggleValue]);
 
     return (
