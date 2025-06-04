@@ -3,7 +3,7 @@ import { useCheckboxGroup } from './CheckboxGroup';
 
 type CheckboxGroupItemProps = React.HTMLAttributes<HTMLDivElement> & {
     value: string;
-    children: React.ReactNode;
+    children?: React.ReactNode;
     onCheckboxGroupItemClick: (value: string[]) => void;
 };
 
