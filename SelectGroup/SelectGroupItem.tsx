@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelectGroup } from './SelectGroup';
 
-type SelectGroupObject = { label: string; value: string };
+export type SelectGroupObject = { label: string; value: string };
 export type SelectGroupValue = string | SelectGroupObject;
 
 type SelectGroupItemProps = React.HTMLAttributes<HTMLLIElement> & {
