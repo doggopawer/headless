@@ -1,5 +1,5 @@
 .Tooltip {
-    position: relative;
+    // position: relative;
     display: inline-block;
 }
 
@@ -8,11 +8,13 @@
 
 .Content {
     &.Closed {
-        opacity: 0;
+        // opacity: 0;
         pointer-events: none; /* 클릭 방지 */
+        display: none;
     }
 
     &.Open {
-        opacity: 1;
+        // opacity: 1;
+        display: block;
     }
 }

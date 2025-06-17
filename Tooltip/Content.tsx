@@ -8,10 +8,18 @@ type ContentProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const Content = ({ children, ...props }: ContentProps) => {
-    const { tooltipValue } = useTooltip();
     const containerRef = useRef<HTMLDivElement>(null);
     const [offset, setOffset] = useState(0);
 
+    const { tooltipValue, showTooltip, hideTooltip } = useTooltip();
+
+    const handleContentShowToggle = () => {
+        showTooltip();
+    };
+
+    const handleContentHideToggle = () => {
+        hideTooltip();
+    };
     useLayoutEffect(() => {
         if (tooltipValue) {
             // 위치 보정 로직

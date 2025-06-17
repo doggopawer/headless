@@ -20,11 +20,7 @@ const Trigger = ({ children, ...props }: TriggerProps) => {
         // console.log('tooltipValue:', tooltipValue);
     }, [tooltipValue]);
 
-    return (
-        <div onMouseOver={handleContentShowToggle} onMouseOut={handleContentHideToggle} {...props}>
-            {children}
-        </div>
-    );
+    return <div {...props}>{children}</div>;
 };
 
 export default Trigger;

@@ -1,6 +1,6 @@
-import React, { createContext, HTMLAttributes, useContext, useState } from 'react';
+// Tooltip.tsx
+import React, { createContext, HTMLAttributes, useContext, useRef, useState } from 'react';
 import Trigger from './Trigger';
-import Box from './Box';
 import Content from './Content';
 import styles from './Tooltip.module.scss';
 
@@ -22,30 +22,45 @@ type TooltipProps = HTMLAttributes<HTMLDivElement> & {
 
 const Tooltip = ({ children, ...props }: TooltipProps) => {
     const [tooltipValue, setTooltipValue] = useState(false);
+    const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const showTooltip = () => {
+        if (hideTimeoutRef.current) {
+            clearTimeout(hideTimeoutRef.current);
+            hideTimeoutRef.current = null;
+        }
         setTooltipValue(true);
     };
 
     const hideTooltip = () => {
-        setTooltipValue(false);
+        if (hideTimeoutRef.current !== null) {
+            // 이미 타이머 설정되어 있으면 중복 방지
+            return;
+        }
+
+        hideTimeoutRef.current = setTimeout(() => {
+            setTooltipValue(false);
+            hideTimeoutRef.current = null;
+        }, 150);
     };
 
     return (
         <TooltipContext.Provider value={{ tooltipValue, showTooltip, hideTooltip }}>
-            <div {...props} className={styles.Tooltip}>
+            {/* 
+        여기 div가 Trigger + Content 전체를 감싸는 hover 영역이 됩니다.
+        onMouseEnter/Leave를 이 div에만 걸면 틈새에도 닫히지 않습니다.
+      */}
+            <div {...props} className={styles.Tooltip} onMouseEnter={showTooltip} onMouseLeave={hideTooltip}>
                 {children}
             </div>
         </TooltipContext.Provider>
     );
 };
 
-export const useTooltip = () => {
-    return useContext(TooltipContext);
-};
+export const useTooltip = () => useContext(TooltipContext);
 
 export default Tooltip;
 
+// 이렇게 해야 아래에서 Tooltip.Trigger 와 Tooltip.Content 로 사용 가능
 Tooltip.Trigger = Trigger;
 Tooltip.Content = Content;
-// Tooltip.Box = Box;
