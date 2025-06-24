@@ -50,7 +50,7 @@ const Content = ({ children, ...props }: ContentProps) => {
         <div
             ref={containerRef}
             {...props}
-            style={{ transform: offset ? `translateX(-${offset}px)` : undefined }}
+            style={{ transform: offset ? `translateX(-${offset}px)` : undefined, ...props.style }}
             className={combinedStyle}
         >
             {children}
