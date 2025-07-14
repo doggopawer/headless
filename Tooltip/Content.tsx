@@ -136,12 +136,14 @@ const Content: React.FC<ContentProps> = ({
 
     // ── 5) portal render ──
     if (!containerRef.current) return null;
+
+    console.log(props.style, '스타일');
     return createPortal(
         <div
             {...props}
             ref={contentRef}
             className={classNames(styles.Content, props.className)}
-            style={style}
+            style={{ ...style, ...props.style }}
             onMouseEnter={showTooltip}
             onMouseLeave={hideTooltip}
         >
