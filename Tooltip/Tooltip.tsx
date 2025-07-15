@@ -8,7 +8,7 @@ type TooltipContextType = {
     tooltipValue: boolean;
     showTooltip: () => void;
     hideTooltip: () => void;
-    anchorRef: React.RefObject<HTMLDivElement>;
+    anchorRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const TooltipContext = createContext<TooltipContextType | null>(null);
@@ -28,7 +28,7 @@ const Tooltip: React.FC<TooltipProps> & {
 } = ({ children, className, ...props }) => {
     const [tooltipValue, setTooltipValue] = useState(false);
     const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const anchorRef = useRef<HTMLDivElement>(null);
+    const anchorRef = useRef<HTMLDivElement | null>(null);
 
     const showTooltip = () => {
         if (hideTimer.current) {
