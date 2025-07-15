@@ -35,7 +35,7 @@ const ToastProvider = ({ children, ...props }: ToastProviderProps) => {
         if (toastValue) {
             const timeout = setTimeout(() => {
                 setToastValue(false);
-            }, 2000);
+            }, 1500);
             return () => clearTimeout(timeout);
         }
     }, [toastValue]);
