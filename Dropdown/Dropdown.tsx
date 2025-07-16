@@ -9,7 +9,7 @@ type DropdownContextType = {
     toggleDropdown: () => void;
     openDropdown: () => void;
     closeDropdown: () => void;
-    anchorRef: React.RefObject<HTMLElement>; // ← new
+    anchorRef: React.RefObject<HTMLElement | null>; // ← new
 };
 
 const DropdownContext = createContext<DropdownContextType>({
