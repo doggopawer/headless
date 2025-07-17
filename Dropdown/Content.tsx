@@ -96,6 +96,27 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => 
         });
     }, [dropdownValue, offset, anchorRef]);
 
+    // 2-1) 외부 클릭 시 닫기
+    useEffect(() => {
+        if (!dropdownValue) return;
+
+        const handleClickOutside = (e: MouseEvent) => {
+            const anchorEl = anchorRef.current;
+            const menuEl = menuRef.current;
+            if (!anchorEl || !menuEl) return;
+
+            // 클릭이 anchor나 menu 바깥인 경우만 close
+            if (!anchorEl.contains(e.target as Node) && !menuEl.contains(e.target as Node)) {
+                closeDropdown();
+            }
+        };
+
+        window.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            window.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownValue, closeDropdown, anchorRef]);
+
     // 6) portal render
     if (!portalRoot.current) return null;
     return createPortal(
