@@ -25,7 +25,7 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => 
             height: '0',
             overflow: 'visible',
             pointerEvents: 'none',
-            zIndex: '999',
+            zIndex: '1009',
         });
         document.body.appendChild(el);
         portalRoot.current = el;
