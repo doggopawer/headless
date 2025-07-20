@@ -1,8 +1,13 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {HTMLAttributes, useEffect, useRef, useState} from "react";
 import {useBottomSheet} from "./BottomSheet";
 import styles from "./BottomSheet.module.scss";
+import classNames from "classnames";
 
-const BottomSheetContent = ({children}: {children: React.ReactNode}) => {
+type BottomSheetContentProps = {
+    children: React.ReactNode;
+} & HTMLAttributes<HTMLInputElement>;
+
+const BottomSheetContent = ({children, ...props}: BottomSheetContentProps) => {
     const {isOpen, close} = useBottomSheet();
     const sheetRef = useRef<HTMLDivElement>(null);
     const [y, setY] = useState(100);
@@ -72,8 +77,9 @@ const BottomSheetContent = ({children}: {children: React.ReactNode}) => {
 
     return (
         <div
+            {...props}
             ref={sheetRef}
-            className={styles.bottomSheet}
+            className={classNames(styles.bottomSheet, props.className)}
             style={{
                 transform: `translateY(${y}%)`,
                 transition: isAnimating ? "transform 0.3s ease-out" : "none",
