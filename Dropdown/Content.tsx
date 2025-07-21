@@ -76,7 +76,7 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => 
         }
 
         const rect = anchorEl.getBoundingClientRect();
-        const w = rect.width;
+        const w = menuEl.offsetWidth;
         const h = menuEl.offsetHeight;
         const vw = document.documentElement.clientWidth;
         const vh = document.documentElement.clientHeight;
@@ -92,7 +92,7 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => 
             position: 'absolute',
             top,
             left,
-            width: w, // ✅ width 고정
+            // width: 'auto', // ✅ width 고정
             zIndex: 1000,
             visibility: 'visible',
             pointerEvents: 'auto',
