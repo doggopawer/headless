@@ -38,8 +38,15 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => 
     // 2) 스크롤 시 드롭다운 닫기
     useEffect(() => {
         if (!dropdownValue) return;
-        const handler = () => closeDropdown();
-        // capture 단계로 걸어야 스크롤 직후에도 바로 닫힙니다
+        const handler = (e: Event) => {
+            const menuEl = menuRef.current;
+            if (menuEl && e.target instanceof Node && menuEl.contains(e.target)) {
+                // 메뉴 내부 스크롤이면 무시
+                return;
+            }
+            closeDropdown();
+        };
+
         window.addEventListener('scroll', handler, true);
         return () => {
             window.removeEventListener('scroll', handler, true);
@@ -68,28 +75,24 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => 
             return;
         }
 
-        // trigger 위치 측정
         const rect = anchorEl.getBoundingClientRect();
-        const w = menuEl.offsetWidth;
+        const w = rect.width;
         const h = menuEl.offsetHeight;
         const vw = document.documentElement.clientWidth;
         const vh = document.documentElement.clientHeight;
 
-        // 기본: trigger 바로 아래, 왼쪽 정렬
         let top = rect.bottom + window.scrollY + offset;
         let left = rect.left + window.scrollX;
 
-        // 우측 화면 넘침 방지
         if (left + w > vw) left = vw - w - offset;
         if (left < 0) left = offset;
-
-        // 아래 화면 넘침 시 trigger 위로
         if (top + h > vh) top = rect.top + window.scrollY - h - offset;
 
         setStyle({
             position: 'absolute',
             top,
             left,
+            width: w, // ✅ width 고정
             zIndex: 1000,
             visibility: 'visible',
             pointerEvents: 'auto',
@@ -127,7 +130,7 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => 
                 [styles.Open]: dropdownValue,
                 [styles.Closed]: !dropdownValue,
             })}
-            style={style}
+            style={{ ...style }}
             onMouseDown={(e) => e.stopPropagation()} // 외부 클릭 방지
         >
             {children}
