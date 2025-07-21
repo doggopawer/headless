@@ -8,9 +8,10 @@ import { useDropdown } from './Dropdown';
 type ContentProps = React.HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
     offset?: number; // 트리거와의 거리(px), 기본 4
+    full?: boolean;
 };
 
-const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => {
+const Content: React.FC<ContentProps> = ({ children, offset = 4, full, ...props }) => {
     const { dropdownValue, closeDropdown, anchorRef } = useDropdown();
 
     // 1) portal 컨테이너: mount 시 단 한 번 append / unmount 시 제거
@@ -92,7 +93,7 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, ...props }) => 
             position: 'absolute',
             top,
             left,
-            // width: 'auto', // ✅ width 고정
+            width: full ? rect.width : 'auto', // ✅ width 고정
             zIndex: 1000,
             visibility: 'visible',
             pointerEvents: 'auto',
