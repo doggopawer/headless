@@ -126,8 +126,16 @@ const Content: React.FC<ContentProps> = ({
 
     useEffect(() => {
         if (!tooltipValue) return;
-        const handler = () => hideTooltip();
-        // capture 단계로 걸어야 스크롤 직후에도 바로 닫힙니다
+
+        const handler = (event: Event) => {
+            // event.target이 툴팁 content 영역 안에 있는 경우 닫지 않음
+            const contentEl = contentRef.current;
+            if (contentEl && contentEl.contains(event.target as Node)) {
+                return;
+            }
+            hideTooltip();
+        };
+
         window.addEventListener('scroll', handler, true);
         return () => {
             window.removeEventListener('scroll', handler, true);
