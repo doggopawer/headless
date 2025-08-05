@@ -82,23 +82,23 @@ const Content: React.FC<ContentProps> = ({ children, offset = 4, full, ...props 
         const vw = document.documentElement.clientWidth;
         const vh = document.documentElement.clientHeight;
 
-        let top = rect.bottom + window.scrollY + offset;
-        let left = rect.left + window.scrollX;
+        let top = rect.bottom + offset;
+        let left = rect.left;
 
         if (left + w > vw) left = vw - w - offset;
         if (left < 0) left = offset;
-        if (top + h > vh) top = rect.top + window.scrollY - h - offset;
+        if (top + h > vh) top = rect.top - h - offset;
 
         setStyle({
-            position: 'absolute',
+            position: 'fixed',
             top,
             left,
-            width: full ? rect.width : 'auto', // ✅ width 고정
+            width: full ? rect.width : 'auto',
             zIndex: 1000,
             visibility: 'visible',
             pointerEvents: 'auto',
         });
-    }, [dropdownValue, offset, anchorRef]);
+    }, [dropdownValue, offset, anchorRef, full]);
 
     // 2-1) 외부 클릭 시 닫기
     useEffect(() => {
