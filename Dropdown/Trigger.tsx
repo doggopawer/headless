@@ -1,25 +1,31 @@
+// Trigger.js
 import React, { MouseEventHandler } from 'react';
 import { useDropdown } from './Dropdown';
 
-type TriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type TriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
 };
 
-const Trigger = ({ children, ...props }: TriggerProps) => {
-    const { dropdownValue, toggleDropdown } = useDropdown();
+const Trigger: React.FC<TriggerProps> = ({ children, ...props }) => {
+    const { dropdownValue, toggleDropdown, anchorRef } = useDropdown();
 
-    const handleTriggerClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-        props.onClick && props.onClick(e);
+    const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+        props.onClick?.(e);
         toggleDropdown();
     };
 
-    // 이벤트 캡쳐링 방지
-    const handleTriggerMouseDownCapture = (event: React.MouseEvent<HTMLButtonElement>) => {
-        dropdownValue && event.stopPropagation();
+    // prevent blur when open
+    const handleMouseDownCapture = (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (dropdownValue) e.stopPropagation();
     };
 
     return (
-        <button {...props} onClick={handleTriggerClick} onMouseDownCapture={handleTriggerMouseDownCapture}>
+        <button
+            {...props}
+            ref={anchorRef as React.Ref<HTMLButtonElement>}
+            onClick={handleClick}
+            onMouseDownCapture={handleMouseDownCapture}
+        >
             {children}
         </button>
     );

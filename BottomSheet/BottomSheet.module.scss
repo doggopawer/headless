@@ -1,0 +1,38 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    // background: rgba(0, 0, 0, 0.5);
+    // backdrop-filter: blur(4px);
+    transition: background 0.3s;
+    z-index: 1000;
+}
+
+.bottomSheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    max-height: 80vh;
+    height: 80vh;
+    overflow-y: auto;
+    will-change: transform;
+    touch-action: none;
+    z-index: 1001;
+    transition: transform 0.3s;
+}
+
+.contentBody {
+    height: calc(100% - 40px);
+    box-sizing: border-box;
+}
+
+.handle {
+    width: 40px;
+    height: 4px;
+    background: #ccc;
+    border-radius: 2px;
+    margin: 8px auto;
+}

@@ -1,27 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTooltip } from './Tooltip';
 
 type TriggerProps = React.HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
 };
 
-const Trigger = ({ children, ...props }: TriggerProps) => {
-    const { tooltipValue, showTooltip, hideTooltip } = useTooltip();
-
-    const handleContentShowToggle = () => {
-        showTooltip();
-    };
-
-    const handleContentHideToggle = () => {
-        hideTooltip();
-    };
-
-    useEffect(() => {
-        // console.log('tooltipValue:', tooltipValue);
-    }, [tooltipValue]);
-
+const Trigger: React.FC<TriggerProps> = ({ children, ...props }) => {
+    const { showTooltip, hideTooltip } = useTooltip();
     return (
-        <div onMouseOver={handleContentShowToggle} onMouseOut={handleContentHideToggle} {...props}>
+        <div {...props} onMouseEnter={showTooltip} onMouseLeave={hideTooltip} style={{ display: 'inline-block' }}>
             {children}
         </div>
     );
