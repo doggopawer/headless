@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelectGroup } from './SelectGroup';
 
-type SelectGroupDisplayProps = React.HTMLAttributes<HTMLDivElement>;
+type SelectGroupDisplayProps = React.HTMLAttributes<HTMLDivElement> & {
+    render?: (value: string) => React.ReactNode;
+};
 
 const SelectGroupDisplay = (props: SelectGroupDisplayProps) => {
     const { selectGroupValue } = useSelectGroup();

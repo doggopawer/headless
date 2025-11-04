@@ -5,6 +5,7 @@ import { useTooltip } from './Tooltip';
 
 type ContentProps = React.HTMLAttributes<HTMLDivElement> & {
     children: React.ReactNode;
+    placement?: string;
 };
 
 const Content = ({ children, ...props }: ContentProps) => {
